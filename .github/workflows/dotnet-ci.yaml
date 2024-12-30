@@ -26,3 +26,14 @@ jobs:
         with: 
           name: dotnet-artifact
           path: dotnetapp/output/*    
+    
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    environment: Dev
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run a multi-line script
+        run: |
+          echo "Deployment to Dev Environment"
