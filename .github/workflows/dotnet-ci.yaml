@@ -20,9 +20,6 @@ jobs:
           dotnet restore
           dotnet build --configuration Release 
           dotnet publish -c Release -o output 
-          echo "Packaging the application..."
-          cd output
-          ip -r ../../dotnet.zip . 
 
       - name: Upload a Build Artifact
         uses: actions/upload-artifact@v4.5.0
