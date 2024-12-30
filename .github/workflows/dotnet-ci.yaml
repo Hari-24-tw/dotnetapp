@@ -29,11 +29,11 @@ jobs:
     
   deploy:
     name: Deploy
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     environment: Dev
 
     steps:
-      - uses: actions/checkout@v4
-      - name: Run a multi-line script
+      # - uses: actions/checkout@v4
+      - name: Deployment-Dev
         run: |
           echo "Deployment to Dev Environment"
