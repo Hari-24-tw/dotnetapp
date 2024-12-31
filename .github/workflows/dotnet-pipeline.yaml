@@ -38,9 +38,10 @@ jobs:
           ls -la
 
       - name: Restore dependencies
-        run: dotnet restore dotnetapp.csproj
+        run: dotnet restore dotnetapp/dotnetapp.csproj
       
-      - run: |
+      - name: Sonarqube Scanner
+        run: |
           dotnet tool install --global dotnet-sonarscanner
           dotnet sonarscanner begin \
             /o:"github-dotnet" \
