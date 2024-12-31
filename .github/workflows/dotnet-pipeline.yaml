@@ -13,13 +13,42 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Build steps
+      - name: Copy build files
         run: |
           echo "Starting build..."
           cd dotnetapp 
-          dotnet restore
-          dotnet build --configuration Release 
-          dotnet publish -c Release -o output 
+      
+      # - name: sonarqube scanner
+      #   uses: sonarsource/sonarqube-scanner-action@4.18.0
+      #   with:
+      #     projectKey: "github-dotnet_github-dotnet-app"
+      #     projectName: "dotnetapp"
+      #     organization: "github-dotnet"
+      #     token: "b922cbc2489b9197dfceabdabd04a43ba70b1566"
+      
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+      
+      - name: Restore dependencies
+        run: dotnet restore
+      
+      - run: |
+          dotnet tool install --global dotnet-sonarscanner
+          dotnet sonarscanner begin \
+            /o:"github-dotnet" \
+            /k:"github-dotnet_github-dotnet-app" \
+            /d:sonar.host.url="https://sonarcloud.io" \
+            /d:sonar.token="b922cbc2489b9197dfceabdabd04a43ba70b1566"
+
+      - name: Build
+        run: dotnet build --configuration Release
+      
+      - run: dotnet sonarscanner end /d:sonar.token="b922cbc2489b9197dfceabdabd04a43ba70b1566"
+
+      - name: Test
+        run: dotnet test --no-build --verbosity normal
 
       - name: Upload a Build Artifact
         uses: actions/upload-artifact@v4.5.0
