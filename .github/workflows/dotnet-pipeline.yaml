@@ -42,7 +42,7 @@ jobs:
       - name: Build
         run: |
           dotnet build --configuration Release dotnetapp/dotnet_sample.csproj
-          zip -r dotnetapp/output/build.zip dotnetapp/bin/Release/*
+          zip -r dotnetapp/build.zip dotnetapp/bin/Release/*
       
       - run: dotnet sonarscanner end /d:sonar.token="${{ env.SONARQUBE_TOKEN }}"
 
@@ -53,7 +53,7 @@ jobs:
         uses: actions/upload-artifact@v4.5.0
         with: 
           name: dotnet-zip-artifact
-          path: dotnetapp/output/build.zip 
+          path: dotnetapp/build.zip 
     
   deploy:
     name: Deploy
