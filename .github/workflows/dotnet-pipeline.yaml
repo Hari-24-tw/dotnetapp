@@ -6,6 +6,9 @@ on:
       
   workflow_dispatch:
 
+env:
+  SONARQUBE_TOKEN: ${{ secrets.SONARQUBE_TOKEN }}
+
 jobs:
   build:
     runs-on: ubuntu-22.04
@@ -27,29 +30,19 @@ jobs:
       - name: Restore dependencies
         run: dotnet restore dotnetapp/dotnet_sample.csproj
       
-      # - name: Sonarqube Scanner
-      #   run: |
-      #     dotnet tool install --global dotnet-sonarscanner
-      #     dotnet sonarscanner begin \
-      #       /o:"github-dotnet" \
-      #       /k:"github-dotnet_github-dotnet-app" \
-      #       /d:sonar.host.url="https://sonarcloud.io" \
-      #       /d:sonar.token="b922cbc2489b9197dfceabdabd04a43ba70b1566"
-      
-
-      - name: sonarqube scanner
-        uses: sonarsource/sonarqube-scanner-action@4.18.0
-        with:
-          projectKey: "github-dotnet_github-dotnet-app"
-          projectName: "dotnetapp"
-          organization: "github-dotnet"
-          token: "b922cbc2489b9197dfceabdabd04a43ba70b1566"
-
+      - name: Sonarqube Scanner
+        run: |
+          dotnet tool install --global dotnet-sonarscanner
+          dotnet sonarscanner begin \
+            /o:"github-dotnet" \
+            /k:"github-dotnet_github-dotnet-app" \
+            /d:sonar.host.url="https://sonarcloud.io" \
+            /d:sonar.token="${{ env.SONARQUBE_TOKEN }}"
+    
       - name: Build
         run: dotnet build --configuration Release dotnetapp/dotnet_sample.csproj
       
-      - run: dotnet sonarscanner end /d:sonar.token="b922cbc2489b9197dfceabdabd04a43ba70b1566"
-
+      - run: dotnet sonarscanner end /d:sonar.token="${{ env.SONARQUBE_TOKEN }}"
       - name: Test
         run: dotnet test --no-build --verbosity normal dotnetapp/dotnet_sample.csproj
 
