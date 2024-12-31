@@ -38,7 +38,7 @@ jobs:
           ls -la
 
       - name: Restore dependencies
-        run: dotnet restore dotnet_sample.csproj
+        run: dotnet restore dotnetapp/dotnet_sample.csproj
       
       - name: Sonarqube Scanner
         run: |
