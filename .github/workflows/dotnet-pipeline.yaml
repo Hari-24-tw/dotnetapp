@@ -31,6 +31,12 @@ jobs:
         with:
           dotnet-version: 8.0.x
       
+      - name: Copy build files
+        run: |
+          echo "Starting build..."
+          cd dotnetapp 
+          ls -la
+
       - name: Restore dependencies
         run: dotnet restore
       
