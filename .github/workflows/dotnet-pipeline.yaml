@@ -42,10 +42,10 @@ jobs:
       - name: Build
         run: |
           dotnet build --configuration Release dotnetapp/dotnet_sample.csproj
-          zip -r dotnetapp/output/build.zip dotnetapp/output/*
+          zip -r dotnetapp/output/build.zip dotnetapp/bin/Release/*
       
       - run: dotnet sonarscanner end /d:sonar.token="${{ env.SONARQUBE_TOKEN }}"
-      
+
       - name: Test
         run: dotnet test --no-build --verbosity normal dotnetapp/dotnet_sample.csproj
 
