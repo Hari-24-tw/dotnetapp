@@ -30,12 +30,6 @@ jobs:
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: 8.0.x
-      
-      - name: Copy build files
-        run: |
-          echo "Starting build..."
-          cd dotnetapp 
-          ls -la
 
       - name: Restore dependencies
         run: dotnet restore dotnetapp/dotnet_sample.csproj
@@ -50,12 +44,12 @@ jobs:
             /d:sonar.token="b922cbc2489b9197dfceabdabd04a43ba70b1566"
 
       - name: Build
-        run: dotnet build --configuration Release 
+        run: dotnet build --configuration Release dotnetapp/dotnet_sample.csproj
       
       - run: dotnet sonarscanner end /d:sonar.token="b922cbc2489b9197dfceabdabd04a43ba70b1566"
 
       - name: Test
-        run: dotnet test --no-build --verbosity normal
+        run: dotnet test --no-build --verbosity normal dotnetapp/dotnet_sample.csproj
 
       - name: Upload a Build Artifact
         uses: actions/upload-artifact@v4.5.0
