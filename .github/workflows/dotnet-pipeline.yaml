@@ -38,7 +38,7 @@ jobs:
           ls -la
 
       - name: Restore dependencies
-        run: dotnet restore
+        run: dotnet restore dotnetapp.csproj
       
       - run: |
           dotnet tool install --global dotnet-sonarscanner
@@ -49,7 +49,7 @@ jobs:
             /d:sonar.token="b922cbc2489b9197dfceabdabd04a43ba70b1566"
 
       - name: Build
-        run: dotnet build --configuration Release
+        run: dotnet build --configuration Release 
       
       - run: dotnet sonarscanner end /d:sonar.token="b922cbc2489b9197dfceabdabd04a43ba70b1566"
 
