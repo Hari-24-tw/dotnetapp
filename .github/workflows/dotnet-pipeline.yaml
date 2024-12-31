@@ -1,4 +1,4 @@
-name: Dotnet-pipelines
+name: Dotnet-pipeline
 
 on:
   push:
@@ -17,14 +17,7 @@ jobs:
         run: |
           echo "Starting build..."
           cd dotnetapp 
-      
-      # - name: sonarqube scanner
-      #   uses: sonarsource/sonarqube-scanner-action@4.18.0
-      #   with:
-      #     projectKey: "github-dotnet_github-dotnet-app"
-      #     projectName: "dotnetapp"
-      #     organization: "github-dotnet"
-      #     token: "b922cbc2489b9197dfceabdabd04a43ba70b1566"
+    
       
       - name: Setup .NET
         uses: actions/setup-dotnet@v4
@@ -34,14 +27,23 @@ jobs:
       - name: Restore dependencies
         run: dotnet restore dotnetapp/dotnet_sample.csproj
       
-      - name: Sonarqube Scanner
-        run: |
-          dotnet tool install --global dotnet-sonarscanner
-          dotnet sonarscanner begin \
-            /o:"github-dotnet" \
-            /k:"github-dotnet_github-dotnet-app" \
-            /d:sonar.host.url="https://sonarcloud.io" \
-            /d:sonar.token="b922cbc2489b9197dfceabdabd04a43ba70b1566"
+      # - name: Sonarqube Scanner
+      #   run: |
+      #     dotnet tool install --global dotnet-sonarscanner
+      #     dotnet sonarscanner begin \
+      #       /o:"github-dotnet" \
+      #       /k:"github-dotnet_github-dotnet-app" \
+      #       /d:sonar.host.url="https://sonarcloud.io" \
+      #       /d:sonar.token="b922cbc2489b9197dfceabdabd04a43ba70b1566"
+      
+
+      - name: sonarqube scanner
+        uses: sonarsource/sonarqube-scanner-action@4.18.0
+        with:
+          projectKey: "github-dotnet_github-dotnet-app"
+          projectName: "dotnetapp"
+          organization: "github-dotnet"
+          token: "b922cbc2489b9197dfceabdabd04a43ba70b1566"
 
       - name: Build
         run: dotnet build --configuration Release dotnetapp/dotnet_sample.csproj
