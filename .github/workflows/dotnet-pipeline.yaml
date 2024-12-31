@@ -40,22 +40,26 @@ jobs:
             /d:sonar.token="${{ env.SONARQUBE_TOKEN }}"
     
       - name: Build
-        run: dotnet build --configuration Release dotnetapp/dotnet_sample.csproj
+        run: |
+          dotnet build --configuration Release dotnetapp/dotnet_sample.csproj
+          zip -r dotnetapp/output/build.zip dotnetapp/output/*
       
       - run: dotnet sonarscanner end /d:sonar.token="${{ env.SONARQUBE_TOKEN }}"
+      
       - name: Test
         run: dotnet test --no-build --verbosity normal dotnetapp/dotnet_sample.csproj
 
-      - name: Upload a Build Artifact
+      - name: Upload dotnet Artifact
         uses: actions/upload-artifact@v4.5.0
         with: 
-          name: dotnet-artifact
-          path: dotnetapp/output/*    
+          name: dotnet-zip-artifact
+          path: dotnetapp/output/build.zip 
     
   deploy:
     name: Deploy
     runs-on: ubuntu-22.04
     environment: Dev
+    needs: build
 
     steps:
       # - uses: actions/checkout@v4
