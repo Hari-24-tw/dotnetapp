@@ -34,8 +34,8 @@ jobs:
         run: |
           dotnet tool install --global dotnet-sonarscanner
           dotnet sonarscanner begin \
-            /o:"github-dotnet" \
-            /k:"github-dotnet_github-dotnet-app" \
+            /o:"hari-24-tw" \
+            /k:"Hari-24-tw_dotnetapp" \
             /d:sonar.host.url="https://sonarcloud.io" \
             /d:sonar.token="${{ env.SONARQUBE_TOKEN }}"
     
