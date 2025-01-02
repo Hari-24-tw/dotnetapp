@@ -68,3 +68,15 @@ jobs:
       - name: Deployment-Prod
         run: |
           echo "Deployment to Prod Environment"
+  
+  docker-build:
+    name: Build Docker Image
+    runs-on: ubuntu-22.04
+    needs: build
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build Docker Image
+        run: |
+          docker build -t dotnetapp:${{ github.run_number }} -f dotnetapp/docker/Dockerfile
