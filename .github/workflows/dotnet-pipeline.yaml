@@ -78,4 +78,4 @@ jobs:
 
       - name: Build Docker Image
         run: |
-          docker build -t dotnetapp:${{ github.run_number }} -f dotnetapp/docker/Dockerfile
+          docker build -t dotnetapp:${{ github.run_number }} -f dotnetapp/docker/Dockerfile .
