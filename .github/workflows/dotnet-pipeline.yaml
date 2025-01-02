@@ -80,3 +80,4 @@ jobs:
         run: |
           cd dotnetapp
           docker build -t dotnetapp:${{ github.run_number }} .
+          docker images
