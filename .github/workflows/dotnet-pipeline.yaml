@@ -78,4 +78,5 @@ jobs:
 
       - name: Build Docker Image
         run: |
-          docker build -t dotnetapp:${{ github.run_number }} ./dotnetapp/Dockerfile
+          cd dotnetapp
+          docker build -t dotnetapp:${{ github.run_number }} .
