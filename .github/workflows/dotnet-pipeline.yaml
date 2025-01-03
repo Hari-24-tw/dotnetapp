@@ -37,7 +37,9 @@ jobs:
         run: |
           dotnet build --configuration Release dotnetapp/dotnet_sample.csproj
           zip -r dotnetapp/build.zip dotnetapp/bin/Release/*
-      
+          cd dotnetapp
+          ls -l
+          
       - name: Sonarqube End
         run: dotnet sonarscanner end /d:sonar.token="${{ env.SONARQUBE_TOKEN }}"
 
